@@ -1,0 +1,35 @@
+name: Node.js CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger only when pushing to main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 🔄 Checkout code
+      uses: actions/checkout@v3
+
+    - name: 🟢 Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: 📦 Install dependencies
+      run: npm install
+
+    - name: ✅ Run tests (optional)
+      run: echo "No tests defined"  # Replace with `npm test` if you have tests
+
+    - name: 🐳 Build Docker image
+      run: docker build -t jagruti07/nodejs-cicd-demo:latest .
+
+   
+      username: ${{ secrets.jagruti07 }}
+      password: ${{ secrets.dckr_pat_BMdFpq-8k7lu6gk_i7Qt3TL98Gs }}
+
+    - name: 📤 Push Docker image to DockerHub
+      run: docker push jagruti07/nodejs-cicd-demo:latest
